@@ -38,26 +38,41 @@
                 </div>
             </div>
 
-            <!-- More animations coming soon -->
-            <div class="animation-card coming-soon">
+            <!-- Starry Sky -->
+            <div class="animation-card" data-animation="starry-sky">
                 <div class="card-preview">
-                    <div class="coming-soon-text">即将推出</div>
+                    <video class="preview-video" autoplay loop muted playsinline>
+                        <source src="videos/starry-sky.mp4" type="video/mp4">
+                    </video>
                 </div>
                 <div class="card-content">
                     <h3 class="card-title">🌌 星空漫步</h3>
                     <p class="card-description">流星划过璀璨星空，宁静而美丽</p>
-                    <button class="apply-btn" disabled>敬请期待</button>
+                    <button class="apply-btn" onclick="app.selectAnimation('starry-sky')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <polygon points="5 3 19 12 5 21 5 3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        应用
+                    </button>
                 </div>
             </div>
 
-            <div class="animation-card coming-soon">
+            <!-- Ocean Waves -->
+            <div class="animation-card" data-animation="ocean-waves">
                 <div class="card-preview">
-                    <div class="coming-soon-text">即将推出</div>
+                    <video class="preview-video" autoplay loop muted playsinline>
+                        <source src="videos/ocean-waves.mp4" type="video/mp4">
+                    </video>
                 </div>
                 <div class="card-content">
                     <h3 class="card-title">🌊 海浪涌动</h3>
                     <p class="card-description">海浪轻拍沙滩，舒缓放松</p>
-                    <button class="apply-btn" disabled>敬请期待</button>
+                    <button class="apply-btn" onclick="app.selectAnimation('ocean-waves')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <polygon points="5 3 19 12 5 21 5 3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        应用
+                    </button>
                 </div>
             </div>
         </section>

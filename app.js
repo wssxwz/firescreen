@@ -85,19 +85,48 @@ class FireScreen {
         const canvas = document.getElementById('animationCanvas');
         
         container.classList.add('active');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
 
-        this.fireworksEngine = new ProFireworks(canvas);
-        this.fireworksEngine.start();
+        // Check if video animation
+        if (this.selectedAnimation === 'starry-sky' || this.selectedAnimation === 'ocean-waves') {
+            this.playVideoAnimation();
+        } else {
+            // Fireworks animation
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            this.fireworksEngine = new ProFireworks(canvas);
+            this.fireworksEngine.start();
+        }
 
         // Request fullscreen
-        const elem = container;
-        if (elem.requestFullscreen) {
-            elem.requestFullscreen().catch(() => {});
-        } else if (elem.webkitRequestFullscreen) {
-            elem.webkitRequestFullscreen();
+        if (container.requestFullscreen) {
+            container.requestFullscreen().catch(() => {});
+        } else if (container.webkitRequestFullscreen) {
+            container.webkitRequestFullscreen();
         }
+    }
+
+    playVideoAnimation() {
+        const container = document.getElementById('fullscreenContainer');
+        const videoPath = this.selectedAnimation === 'starry-sky' 
+            ? 'videos/starry-sky.mp4' 
+            : 'videos/ocean-waves.mp4';
+
+        // Create video element
+        const video = document.createElement('video');
+        video.src = videoPath;
+        video.loop = true;
+        video.autoplay = true;
+        video.muted = false; // Enable sound for fullscreen
+        video.style.width = '100%';
+        video.style.height = '100%';
+        video.style.objectFit = 'cover';
+        video.id = 'fullscreenVideo';
+
+        // Clear canvas and add video
+        const canvas = document.getElementById('animationCanvas');
+        canvas.style.display = 'none';
+        container.appendChild(video);
+        video.play();
     }
 
     setupFullscreenListeners() {
@@ -138,6 +167,17 @@ class FireScreen {
         if (this.fireworksEngine) {
             this.fireworksEngine.stop();
         }
+
+        // Remove video if exists
+        const video = document.getElementById('fullscreenVideo');
+        if (video) {
+            video.pause();
+            video.remove();
+        }
+
+        // Show canvas again
+        const canvas = document.getElementById('animationCanvas');
+        canvas.style.display = 'block';
 
         if (document.exitFullscreen) {
             document.exitFullscreen().catch(() => {});
