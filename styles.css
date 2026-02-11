@@ -6,9 +6,9 @@
 }
 
 :root {
-    --primary: #6366f1;
-    --primary-dark: #4f46e5;
-    --secondary: #8b5cf6;
+    --primary: #000000;
+    --primary-dark: #2a2a2a;
+    --secondary: #1a1a1a;
     --dark: #1f2937;
     --gray: #6b7280;
     --light-gray: #f3f4f6;
@@ -170,29 +170,34 @@ body {
 .apply-btn {
     width: 100%;
     padding: 0.875rem;
-    background: var(--primary);
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
     color: white;
-    border: none;
+    border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 0.75rem;
     font-size: 1rem;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s;
+    transition: all 0.3s ease;
     display: flex;
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
 }
 
 .apply-btn:hover:not(:disabled) {
-    background: var(--primary-dark);
-    transform: scale(1.02);
+    background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
 }
 
 .apply-btn:disabled {
-    background: var(--light-gray);
-    color: var(--gray);
+    background: linear-gradient(135deg, #4a4a4a 0%, #3a3a3a 100%);
+    color: rgba(255, 255, 255, 0.4);
     cursor: not-allowed;
+    opacity: 0.6;
+    border-color: rgba(255, 255, 255, 0.05);
 }
 
 /* Footer */
@@ -322,22 +327,26 @@ body {
 }
 
 .btn-primary {
-    background: var(--primary);
+    background: linear-gradient(135deg, #000000 0%, #1a1a1a 100%);
     color: white;
+    border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .btn-primary:hover {
-    background: var(--primary-dark);
-    transform: scale(1.02);
+    background: linear-gradient(135deg, #2a2a2a 0%, #3a3a3a 100%);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
 }
 
 .btn-secondary {
-    background: var(--light-gray);
+    background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
     color: var(--dark);
+    border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .btn-secondary:hover {
-    background: #e5e7eb;
+    background: linear-gradient(135deg, #e9ecef 0%, #dee2e6 100%);
+    border-color: rgba(0, 0, 0, 0.15);
 }
 
 .hint-text {
