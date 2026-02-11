@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FireScreen - 动画屏幕保护</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Main Page -->
+    <div class="container" id="mainPage">
+        <!-- Header -->
+        <header class="header">
+            <div class="brand">
+                <svg class="brand-icon" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                    <path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                </svg>
+                <h1 class="brand-name">FireScreen</h1>
+            </div>
+            <p class="subtitle">精美动画屏幕保护</p>
+        </header>
+
+        <!-- Animation Gallery -->
+        <section class="gallery">
+            <div class="animation-card" data-animation="fireworks">
+                <div class="card-preview fireworks-preview">
+                    <canvas id="previewCanvas1" class="preview-canvas"></canvas>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">🎆 烟花绽放</h3>
+                    <p class="card-description">五彩缤纷的烟花在夜空中绽放，璀璨夺目</p>
+                    <button class="apply-btn" onclick="app.selectAnimation('fireworks')">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <polygon points="5 3 19 12 5 21 5 3" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                        应用
+                    </button>
+                </div>
+            </div>
+
+            <!-- More animations coming soon -->
+            <div class="animation-card coming-soon">
+                <div class="card-preview">
+                    <div class="coming-soon-text">即将推出</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">🌌 星空漫步</h3>
+                    <p class="card-description">流星划过璀璨星空，宁静而美丽</p>
+                    <button class="apply-btn" disabled>敬请期待</button>
+                </div>
+            </div>
+
+            <div class="animation-card coming-soon">
+                <div class="card-preview">
+                    <div class="coming-soon-text">即将推出</div>
+                </div>
+                <div class="card-content">
+                    <h3 class="card-title">🌊 海浪涌动</h3>
+                    <p class="card-description">海浪轻拍沙滩，舒缓放松</p>
+                    <button class="apply-btn" disabled>敬请期待</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <p>💡 提示：设置密码后全屏播放，按任意键或移动鼠标解锁</p>
+        </footer>
+    </div>
+
+    <!-- Password Modal -->
+    <div class="modal" id="passwordModal">
+        <div class="modal-content">
+            <h2 class="modal-title">🔒 设置解锁密码</h2>
+            <p class="modal-subtitle">请输入4位数字密码</p>
+            <div class="password-input">
+                <input type="text" class="pin-input" maxlength="1" id="pin1" autofocus>
+                <input type="text" class="pin-input" maxlength="1" id="pin2">
+                <input type="text" class="pin-input" maxlength="1" id="pin3">
+                <input type="text" class="pin-input" maxlength="1" id="pin4">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-secondary" onclick="app.closePasswordModal()">取消</button>
+                <button class="btn-primary" onclick="app.confirmPassword()">确定</button>
+            </div>
+            <p class="hint-text">💡 万能密码：0000</p>
+        </div>
+    </div>
+
+    <!-- Unlock Modal -->
+    <div class="modal" id="unlockModal">
+        <div class="modal-content">
+            <h2 class="modal-title">🔓 输入解锁密码</h2>
+            <p class="modal-subtitle error-text" id="errorText" style="display: none;">密码错误，请重试</p>
+            <div class="password-input">
+                <input type="text" class="pin-input" maxlength="1" id="unlock1">
+                <input type="text" class="pin-input" maxlength="1" id="unlock2">
+                <input type="text" class="pin-input" maxlength="1" id="unlock3">
+                <input type="text" class="pin-input" maxlength="1" id="unlock4">
+            </div>
+            <div class="modal-actions">
+                <button class="btn-primary" onclick="app.unlock()">解锁</button>
+            </div>
+            <p class="hint-text">💡 忘记密码？试试 0000</p>
+        </div>
+    </div>
+
+    <!-- Fullscreen Animation -->
+    <div class="fullscreen-container" id="fullscreenContainer">
+        <canvas id="animationCanvas"></canvas>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
