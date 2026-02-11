@@ -86,6 +86,9 @@ class FireScreen {
         
         container.classList.add('active');
 
+        // Block all fullscreen exit attempts
+        this.blockFullscreenExit();
+
         // Check if video animation
         if (this.selectedAnimation === 'starry-sky' || this.selectedAnimation === 'ocean-waves') {
             this.playVideoAnimation();
@@ -105,6 +108,30 @@ class FireScreen {
         }
     }
 
+    blockFullscreenExit() {
+        // Intercept all ESC and F11 keys
+        this.keyBlocker = (e) => {
+            if (e.key === 'Escape' || e.key === 'F11' || e.keyCode === 27 || e.keyCode === 122) {
+                e.preventDefault();
+                e.stopPropagation();
+                e.stopImmediatePropagation();
+                return false;
+            }
+        };
+        
+        document.addEventListener('keydown', this.keyBlocker, true);
+        document.addEventListener('keyup', this.keyBlocker, true);
+        document.addEventListener('keypress', this.keyBlocker, true);
+    }
+
+    unblockFullscreenExit() {
+        if (this.keyBlocker) {
+            document.removeEventListener('keydown', this.keyBlocker, true);
+            document.removeEventListener('keyup', this.keyBlocker, true);
+            document.removeEventListener('keypress', this.keyBlocker, true);
+        }
+    }
+
     playVideoAnimation() {
         const container = document.getElementById('fullscreenContainer');
         const videoPath = this.selectedAnimation === 'starry-sky' 
@@ -120,7 +147,16 @@ class FireScreen {
         video.style.width = '100%';
         video.style.height = '100%';
         video.style.objectFit = 'cover';
+        video.style.position = 'absolute';
+        video.style.top = '0';
+        video.style.left = '0';
+        video.style.zIndex = '9999';
         video.id = 'fullscreenVideo';
+
+        // Prevent video controls
+        video.controls = false;
+        video.disablePictureInPicture = true;
+        video.controlsList = 'nodownload noplaybackrate';
 
         // Clear canvas and add video
         const canvas = document.getElementById('animationCanvas');
@@ -130,9 +166,15 @@ class FireScreen {
     }
 
     setupFullscreenListeners() {
-        const showUnlock = () => {
+        const showUnlock = (e) => {
             const container = document.getElementById('fullscreenContainer');
             const modal = document.getElementById('unlockModal');
+            
+            // Prevent ESC from exiting fullscreen
+            if (e && e.key === 'Escape') {
+                e.preventDefault();
+                e.stopPropagation();
+            }
             
             if (container.classList.contains('active') && !modal.classList.contains('active')) {
                 modal.classList.add('active');
@@ -142,8 +184,31 @@ class FireScreen {
             }
         };
 
-        ['mousemove', 'keydown', 'click'].forEach(event => {
-            document.addEventListener(event, showUnlock);
+        // Listen to all interactions
+        ['mousemove', 'keydown', 'click', 'touchstart'].forEach(event => {
+            document.addEventListener(event, showUnlock, true); // Use capture phase
+        });
+
+        // Block fullscreen change attempts
+        document.addEventListener('fullscreenchange', () => {
+            const container = document.getElementById('fullscreenContainer');
+            if (container.classList.contains('active') && !document.fullscreenElement) {
+                // User tried to exit fullscreen - re-enter it
+                if (container.requestFullscreen) {
+                    container.requestFullscreen().catch(() => {});
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                }
+            }
+        });
+
+        document.addEventListener('webkitfullscreenchange', () => {
+            const container = document.getElementById('fullscreenContainer');
+            if (container.classList.contains('active') && !document.webkitFullscreenElement) {
+                if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                }
+            }
         });
     }
 
@@ -164,6 +229,9 @@ class FireScreen {
     }
 
     stopAnimation() {
+        // Unblock fullscreen exit
+        this.unblockFullscreenExit();
+
         if (this.fireworksEngine) {
             this.fireworksEngine.stop();
         }

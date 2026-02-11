@@ -220,7 +220,7 @@ body {
     display: none;
     align-items: center;
     justify-content: center;
-    z-index: 1000;
+    z-index: 10000;
     animation: fadeIn 0.3s ease-out;
 }
 
@@ -365,7 +365,7 @@ body {
     bottom: 0;
     background: #0f1419;
     display: none;
-    z-index: 999;
+    z-index: 9999;
 }
 
 .fullscreen-container.active {
