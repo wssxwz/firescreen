@@ -185,7 +185,7 @@ class RealisticFireworks {
 
     burst(shell) {
         const patterns = [
-            this.burstChrysan themum,
+            this.burstChrysanthemum,
             this.burstPalm,
             this.burstRing,
             this.burstWillow,
