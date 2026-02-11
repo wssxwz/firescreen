@@ -50,7 +50,7 @@ class FireScreen {
         canvas.width = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
         
-        this.previewEngine = new FireworksEngine(canvas);
+        this.previewEngine = new RealisticFireworks(canvas);
         this.previewEngine.start();
     }
 
@@ -88,7 +88,7 @@ class FireScreen {
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
 
-        this.fireworksEngine = new FireworksEngine(canvas);
+        this.fireworksEngine = new RealisticFireworks(canvas);
         this.fireworksEngine.start();
 
         // Request fullscreen
