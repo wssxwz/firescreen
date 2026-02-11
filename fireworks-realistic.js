@@ -9,23 +9,24 @@ class Shell {
         this.x = x;
         this.y = y;
         this.vx = 0;
-        this.vy = -12 - Math.random() * 3;
-        this.life = 1;
+        this.vy = -15 - Math.random() * 5;
+        this.life = 100;
         this.trail = [];
         this.color = `hsl(${Math.random() * 60 + 15}, 100%, 70%)`;
     }
 
     update() {
-        this.vy += GRAVITY * 0.015;
+        this.vy += 0.18; // Gravity
         this.x += this.vx;
         this.y += this.vy;
-        this.life -= 0.01;
+        this.life--;
 
         this.trail.push({ x: this.x, y: this.y, alpha: 1 });
         if (this.trail.length > 20) this.trail.shift();
         this.trail.forEach(t => t.alpha *= 0.9);
 
-        return this.vy >= -2 || this.life <= 0;
+        // Explode when velocity becomes positive (going down) or life ends
+        return this.vy >= 0 || this.life <= 0;
     }
 
     draw(ctx) {
@@ -66,12 +67,12 @@ class Star {
     }
 
     update() {
-        this.vy += GRAVITY * 0.01;
-        this.vx *= 0.98;
-        this.vy *= 0.98;
+        this.vy += 0.05; // Gravity
+        this.vx *= 0.985;
+        this.vy *= 0.985;
         this.x += this.vx;
         this.y += this.vy;
-        this.life -= 0.008;
+        this.life -= 0.01;
         this.brightness = this.life;
 
         if (this.life > 0.7) {
@@ -166,7 +167,7 @@ class RealisticFireworks {
     }
 
     start() {
-        this.launchInterval = setInterval(() => this.launchShell(), 600);
+        this.launchInterval = setInterval(() => this.launchShell(), 800);
         this.animate();
     }
 
@@ -268,8 +269,8 @@ class RealisticFireworks {
     }
 
     animate() {
-        // Fade effect
-        this.ctx.fillStyle = 'rgba(0, 0, 5, 0.1)';
+        // Fade effect for trail
+        this.ctx.fillStyle = 'rgba(15, 20, 25, 0.12)';
         this.ctx.fillRect(0, 0, this.canvas.width, this.canvas.height);
 
         // Update and draw shells
